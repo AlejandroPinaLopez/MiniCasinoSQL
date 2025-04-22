@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="MiniCasino_SQL">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/dist/MiniCasino_SQL.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
