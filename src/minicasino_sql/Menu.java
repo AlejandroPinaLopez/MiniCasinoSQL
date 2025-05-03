@@ -4,11 +4,11 @@
  */
 package minicasino_sql;
 
-import java.awt.Color;
+import javax.swing.*;
+import javax.swing.plaf.basic.BasicButtonUI;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import javax.swing.JButton;
-import javax.swing.plaf.basic.BasicButtonUI;
 
 /**
  *
@@ -306,6 +306,7 @@ public class Menu extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        BlackJack blackJack = new BlackJack();
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
