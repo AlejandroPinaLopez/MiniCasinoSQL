@@ -5,16 +5,16 @@
  */
 
 package minicasino_sql;
-import java.awt.Color;
+
+import javax.swing.*;
+import javax.swing.plaf.basic.BasicButtonUI;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
-import javax.swing.plaf.basic.BasicButtonUI;
 
 /**
  *
