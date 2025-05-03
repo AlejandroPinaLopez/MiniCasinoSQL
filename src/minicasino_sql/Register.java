@@ -86,19 +86,19 @@ public class Register extends javax.swing.JFrame {
         jTextField1.setBackground(new java.awt.Color(42, 52, 58));
         jTextField1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTextField1.setForeground(new java.awt.Color(204, 204, 204));
-        jTextField1.setBorder(null);
+        jTextField1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(153, 153, 153))); // NOI18N
         jTextField1.setPreferredSize(new java.awt.Dimension(180, 40));
 
         jPasswordField1.setBackground(new java.awt.Color(42, 52, 58));
         jPasswordField1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jPasswordField1.setForeground(new java.awt.Color(204, 204, 204));
-        jPasswordField1.setBorder(null);
+        jPasswordField1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(153, 153, 153))); // NOI18N
         jPasswordField1.setPreferredSize(new java.awt.Dimension(180, 40));
 
         jPasswordField2.setBackground(new java.awt.Color(42, 52, 58));
         jPasswordField2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jPasswordField2.setForeground(new java.awt.Color(204, 204, 204));
-        jPasswordField2.setBorder(null);
+        jPasswordField2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(153, 153, 153))); // NOI18N
         jPasswordField2.setPreferredSize(new java.awt.Dimension(180, 40));
 
         jButton1.setBackground(new java.awt.Color(34, 40, 44));
