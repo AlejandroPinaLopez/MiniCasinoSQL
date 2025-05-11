@@ -5,16 +5,16 @@
  */
 
 package minicasino_sql;
-
-import javax.swing.*;
-import javax.swing.plaf.basic.BasicButtonUI;
-import java.awt.*;
+import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.plaf.basic.BasicButtonUI;
 
 /**
  *
@@ -211,7 +211,7 @@ public class Register extends javax.swing.JFrame {
         String username = jTextField1.getText();
         String password = new String(jPasswordField1.getPassword());
         String confirmPassword = new String(jPasswordField2.getPassword());
-        double initialBalance = 1000.00;
+        double initialBalance = 2500.00;
 
         if (password.equals(confirmPassword)) { 
             
