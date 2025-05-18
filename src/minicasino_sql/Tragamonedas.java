@@ -439,13 +439,21 @@ public class Tragamonedas extends javax.swing.JFrame {
                 pstmtGames.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
                 pstmtGames.executeUpdate();
             }
-
+            
             // 2. Actualizar el balance en la tabla 'users'
             String sqlUsers = "UPDATE users SET balance = ? WHERE id = ?";
             try (PreparedStatement pstmtUsers = conn.prepareStatement(sqlUsers)) {
                 pstmtUsers.setDouble(1, activeUser.getBalance());
                 pstmtUsers.setInt(2, activeUser.getId());
                 pstmtUsers.executeUpdate();
+            }
+            
+           String sqlLeaderboard = "INSERT INTO leaderboard (user_id, highscore) VALUES (?, ?) " +
+                                "ON DUPLICATE KEY UPDATE highscore = IF(VALUES(highscore) > highscore, VALUES(highscore), highscore)";
+            try (PreparedStatement pstmtLeaderboard = conn.prepareStatement(sqlLeaderboard)) {
+                pstmtLeaderboard.setInt(1, activeUser.getId());
+                pstmtLeaderboard.setDouble(2, activeUser.getBalance());
+                pstmtLeaderboard.executeUpdate();
             }
 
             JOptionPane.showMessageDialog(this, "Resultados del juego y balance actualizados correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);

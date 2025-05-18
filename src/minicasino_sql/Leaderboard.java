@@ -3,70 +3,59 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package minicasino_sql;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.table.DefaultTableModel;
-
+import javax.swing.JOptionPane;
 /**
  *
  * @author M0RD3K41
  */
-public class Historial extends javax.swing.JFrame {
-
+public class Leaderboard extends javax.swing.JFrame {
+    
     /**
-     * Creates new form Historial
+     * Creates new form Leaderboard
      */
-
+    
     private UserInformation activeUser;
-     
-    public Historial(UserInformation activeUser) {
+    
+    public Leaderboard(UserInformation activeUser) {
         this.activeUser = activeUser;
         initComponents();
-        cargarHistorial(activeUser.getId());
+        cargarLeaderboard();
     }
     
-    public Historial() {
+    public Leaderboard() {
         initComponents();
     }
     
-    private void cargarHistorial(int userId) {
-            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-            model.setRowCount(0); // Limpia la tabla
+    private void cargarLeaderboard() {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel(); // usa el nombre real de tu JTable
+        model.setRowCount(0); // limpia tabla
 
-            try {
-                // Cambia los datos de conexión según tu configuración
-                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/minicasino", "root", "MiCasino_Equipo$01");
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/minicasino", "root", "MiCasino_Equipo$01")) {
+            String sql = "SELECT user_id, highscore FROM leaderboard ORDER BY highscore DESC LIMIT 10";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
 
-                String sql = "SELECT Id, User_Id, Game_Type, Result, Amount, Date FROM games WHERE User_Id = ?";
-                PreparedStatement stmt = conn.prepareStatement(sql);
-                stmt.setInt(1, userId);
-
-                ResultSet rs = stmt.executeQuery();
-
-                while (rs.next()) {
-                    Object[] fila = new Object[6];
-                    fila[0] = rs.getObject("Id");
-                    fila[1] = rs.getObject("User_Id");
-                    fila[2] = rs.getObject("Game_Type");
-                    fila[3] = rs.getObject("Result");
-                    fila[4] = rs.getObject("Amount");
-                    fila[5] = rs.getObject("Date");
-                    model.addRow(fila);
-                }
-
-                rs.close();
-                stmt.close();
-                conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-                javax.swing.JOptionPane.showMessageDialog(this, "Error al cargar historial: " + e.getMessage());
+            while (rs.next()) {
+                Object[] fila = {
+                    rs.getInt("user_id"),
+                    rs.getDouble("highscore")
+                };
+                model.addRow(fila);
             }
+
+            rs.close();
+            stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error al cargar el leaderboard: " + e.getMessage());
         }
-    
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -107,7 +96,7 @@ public class Historial extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel1.setText("Historial");
+        jLabel1.setText("Leaderboard");
 
         jButton1.setBackground(new java.awt.Color(21, 25, 28));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/icons8-exit-20.png"))); // NOI18N
@@ -152,13 +141,13 @@ public class Historial extends javax.swing.JFrame {
         jTable1.setBackground(new java.awt.Color(204, 204, 204));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "Id", "User_Id", "Game_Type", "Result", "Amount", "Date"
+                "User_Id", "Highscore"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -170,18 +159,18 @@ public class Historial extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(120, 120, 120)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(133, 133, 133))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 30, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -225,20 +214,20 @@ public class Historial extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Historial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Leaderboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Historial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Leaderboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Historial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Leaderboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Historial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Leaderboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Historial().setVisible(true);
+                new Leaderboard().setVisible(true);
             }
         });
     }

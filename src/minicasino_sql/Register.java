@@ -211,7 +211,7 @@ public class Register extends javax.swing.JFrame {
         String username = jTextField1.getText();
         String password = new String(jPasswordField1.getPassword());
         String confirmPassword = new String(jPasswordField2.getPassword());
-        double initialBalance = 2500.00;
+        double initialBalance = 5000.00;
 
         if (password.equals(confirmPassword)) { 
             
