@@ -26,6 +26,7 @@ public class Historial extends javax.swing.JFrame {
     public Historial(UserInformation activeUser) {
         this.activeUser = activeUser;
         initComponents();
+        mostrarDatosUsuario();
         cargarHistorial(activeUser.getId());
     }
     
@@ -34,38 +35,43 @@ public class Historial extends javax.swing.JFrame {
     }
     
     private void cargarHistorial(int userId) {
-            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-            model.setRowCount(0); // Limpia la tabla
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0); // Limpia la tabla
 
-            try {
-                // Cambia los datos de conexión según tu configuración
-                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/minicasino", "root", "MiCasino_Equipo$01");
+        try {
+            // Cambia los datos de conexión según tu configuración
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/minicasino", "root", "MiCasino_Equipo$01");
 
-                String sql = "SELECT Id, User_Id, Game_Type, Result, Amount, Date FROM games WHERE User_Id = ?";
-                PreparedStatement stmt = conn.prepareStatement(sql);
-                stmt.setInt(1, userId);
+            String sql = "SELECT Id, User_Id, Game_Type, Result, Amount, Date FROM games WHERE User_Id = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, userId);
 
-                ResultSet rs = stmt.executeQuery();
+            ResultSet rs = stmt.executeQuery();
 
-                while (rs.next()) {
-                    Object[] fila = new Object[6];
-                    fila[0] = rs.getObject("Id");
-                    fila[1] = rs.getObject("User_Id");
-                    fila[2] = rs.getObject("Game_Type");
-                    fila[3] = rs.getObject("Result");
-                    fila[4] = rs.getObject("Amount");
-                    fila[5] = rs.getObject("Date");
-                    model.addRow(fila);
-                }
-
-                rs.close();
-                stmt.close();
-                conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-                javax.swing.JOptionPane.showMessageDialog(this, "Error al cargar historial: " + e.getMessage());
+            while (rs.next()) {
+                Object[] fila = new Object[6];
+                fila[0] = rs.getObject("Id");
+                fila[1] = rs.getObject("User_Id");
+                fila[2] = rs.getObject("Game_Type");
+                fila[3] = rs.getObject("Result");
+                fila[4] = rs.getObject("Amount");
+                fila[5] = rs.getObject("Date");
+                model.addRow(fila);
             }
+
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al cargar historial: " + e.getMessage());
         }
+    }
+    
+    public void mostrarDatosUsuario() {
+        jLabel2.setText(activeUser.getUsername()); // Asumiendo que jLabel2 es para el nombre
+    }
+    
     
     /**
      * This method is called from within the constructor to initialize the form.

@@ -36,7 +36,7 @@ public class BlackJack {
         }
 
         public String getImagePath() {
-            return "cards/" + this + ".png";
+            return "/cards/" + this + ".png";
         }
     }
 
@@ -147,8 +147,16 @@ public class BlackJack {
     JPanel buttonPanel = new JPanel();
     JButton hitButton = new JButton("Hit");
     JButton stayButton = new JButton("Stay");
-
-    BlackJack() {
+    JButton returnButton = new JButton("Return");
+    
+    private MenuJuegos menuJuegosFrame;
+    private UserInformation activeUser;
+    
+    public BlackJack(MenuJuegos menuJuegosFrame, UserInformation activeUser) {
+        
+        this.menuJuegosFrame = menuJuegosFrame;
+        this.activeUser = activeUser;
+        
         startGame();
 
         frame.setVisible(true);
@@ -156,7 +164,16 @@ public class BlackJack {
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                returnToMenu();
+            }
+        });
+        
         gamePanel.setLayout(new BorderLayout());
         gamePanel.setBackground(new Color(53, 101, 77));
         frame.add(gamePanel);
@@ -165,6 +182,8 @@ public class BlackJack {
         buttonPanel.add(hitButton);
         stayButton.setFocusable(false);
         buttonPanel.add(stayButton);
+        returnButton.setFocusable(false); 
+        buttonPanel.add(returnButton);
         frame.add(buttonPanel, BorderLayout.SOUTH);
 
         hitButton.addActionListener(new ActionListener() {
@@ -194,8 +213,23 @@ public class BlackJack {
                 gamePanel.repaint();
             }
         });
+        
+        returnButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                returnToMenu();
+            }
+        });
 
         gamePanel.repaint();
+    }
+    
+    private void returnToMenu() {
+        frame.dispose(); 
+        if (menuJuegosFrame != null) {
+            menuJuegosFrame.setVisible(true);
+            menuJuegosFrame.mostrarDatosUsuario(); 
+        }
     }
 
     public void startGame() {

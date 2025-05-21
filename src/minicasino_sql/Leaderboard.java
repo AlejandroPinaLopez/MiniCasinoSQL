@@ -25,6 +25,7 @@ public class Leaderboard extends javax.swing.JFrame {
     public Leaderboard(UserInformation activeUser) {
         this.activeUser = activeUser;
         initComponents();
+        mostrarDatosUsuario();
         cargarLeaderboard();
     }
     
@@ -55,6 +56,10 @@ public class Leaderboard extends javax.swing.JFrame {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error al cargar el leaderboard: " + e.getMessage());
         }
+    }
+    
+    public void mostrarDatosUsuario() {
+        jLabel2.setText(activeUser.getUsername()); // Asumiendo que jLabel2 es para el nombre
     }
     /**
      * This method is called from within the constructor to initialize the form.
